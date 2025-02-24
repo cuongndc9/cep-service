@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+
+  cep-service:
+    build: .
+    restart: always
+    ports:
+      - 4000:4000
+    networks:
+      - cep-net
+
+  db:
+    image: postgres:10.3
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=cep-service
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - cep-net
+
+networks:
+  cep-net:
+
+volumes:
+  db:
